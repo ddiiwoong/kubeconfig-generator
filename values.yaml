@@ -1,0 +1,5 @@
+## namespace
+namespace: "default"
+
+## AWX secret key
+service_account_name: "agones"

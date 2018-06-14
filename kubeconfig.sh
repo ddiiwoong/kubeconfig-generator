@@ -92,7 +92,11 @@ get_user_token_from_secret
 set_kube_config_values
  
  
-echo -e "\\nAll done! Test with:"
-echo "KUBECONFIG=${KUBECFG_FILE_NAME} kubectl get pods"
 echo "you should not have any permissions by default - you have just created the authentication part"
 echo "You will need to create RBAC permissions"
+
+echo -n "Creating RBAC"
+kubectl create -f crb.yaml --set subjects[0].name=agones2
+
+echo -e "\\nAll done! Test with:"
+echo "KUBECONFIG=${KUBECFG_FILE_NAME} kubectl get pods"

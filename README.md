@@ -6,6 +6,7 @@ Prerequisite
 
 * kubernetes : 1.7+
 * kubectl
+* jq : (if macOS) https://stedolan.github.io/jq/download/
 
 Usage
 -----

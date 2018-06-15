@@ -84,6 +84,8 @@ set_kube_config_values() {
 }
 
 create_rbac() {
+    export service_account_name=${SERVICE_ACCOUNT_NAME}
+    export namespace=${NAMESPACE}
     rm -f final.yml temp.yml  
     ( echo "cat <<EOF >final.yml";
     cat crb.tmpl;
@@ -91,22 +93,23 @@ create_rbac() {
     ) >temp.yml
     . temp.yml
     kubectl create -f final.yml
-    rm -f temp.yml
+    echo -e "############# review rbac manifest ##############\n"
+    cat final.yml
+    rm -f final.yml temp.yml
 }
 
- 
 create_target_folder
 create_service_account
 get_secret_name_from_service_account
 extract_ca_crt_from_secret
 get_user_token_from_secret
 set_kube_config_values
- 
- 
-echo "you should not have any permissions by default - you have just created the authentication part"
+  
+# echo "you should not have any permissions by default - you have just created the authentication part"
 
 echo -n "Creating RBAC"
 create_rbac
 
 echo -e "\\nAll done! Test with:"
-echo "KUBECONFIG=${KUBECFG_FILE_NAME} kubectl get node"
+KUBECONFIG=${KUBECFG_FILE_NAME} 
+kubectl get node

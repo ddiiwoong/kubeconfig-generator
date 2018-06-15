@@ -4,16 +4,15 @@ Kubeconfig Generator
 Prerequisite
 ------------
 
-gettext
-Install with brew:
+* kubernetes : 1.7+
+* kubectl
 
-brew install gettext
-Installs the libraries and the utilities:
+Usage
+-----
 
-autopoint envsubst gettext gettext.sh gettextize msgattrib msgcat msgcmp msgcomm msgconv msgen msgexec msgfilter msgfmt msggrep msginit msgmerge msgunfmt msguniq ngettext recode-sr-latin xgettext
-But doesn’t add to your path! You need to modify the env. variable $PATH:
+```
+$ git clone https://github.com/ddiiwoong/kubeconfig-generator.git
+$ chmod +x kubeconfig.sh
+$ ./kubeconfig.sh <service_account_name> <namespace>
+```
 
-vi ~/.bash_profile
-And add to the end or modify previous declarations:
-
-export PATH=${PATH}:/usr/local/opt/gettext/bin

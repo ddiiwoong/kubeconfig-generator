@@ -82,7 +82,18 @@ set_kube_config_values() {
     kubectl config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
     --kubeconfig="${KUBECFG_FILE_NAME}"
 }
- 
+
+create_rbac() {
+    rm -f final.yml temp.yml  
+    ( echo "cat <<EOF >final.yml";
+    cat crb.tmpl;
+    echo "EOF";
+    ) >temp.yml
+    . temp.yml
+    kubectl create -f final.yml
+    rm -f temp.yml
+}
+
  
 create_target_folder
 create_service_account
@@ -93,10 +104,9 @@ set_kube_config_values
  
  
 echo "you should not have any permissions by default - you have just created the authentication part"
-echo "You will need to create RBAC permissions"
 
 echo -n "Creating RBAC"
-kubectl create -f crb.yaml --set subjects[0].name=agones2
+create_rbac
 
 echo -e "\\nAll done! Test with:"
-echo "KUBECONFIG=${KUBECFG_FILE_NAME} kubectl get pods"
+echo "KUBECONFIG=${KUBECFG_FILE_NAME} kubectl get node"

@@ -1,5 +1,5 @@
 # kubeconfig-generator
-Kubeconfig Generator
+Kubeconfig Generator can make automatically a kubeconfig for Spinnaker.
 
 Prerequisite
 ------------
